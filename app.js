@@ -238,7 +238,7 @@ function increment(touchX, touchY) {
   dom.counterValue.classList.add('bump');
   triggerRipple(touchX, touchY);
   if (state.sound) playClick();
-  vibrate(10);
+  vibrate(10);          →   vibrate([30]);     // stronger single buzz
   if (state.count === state.target) onRoundComplete();
   else { saveState(); renderCounter(); }
 }
@@ -247,7 +247,7 @@ function onRoundComplete() {
   state.rounds++;
   const phrase = PHRASES[state.phraseIndex];
   if (state.autosave) addHistoryEntry(phrase, state.count, state.rounds);
-  vibrate([30, 50, 30, 50, 60]);
+  vibrate([30, 50, 30, 50, 60]);   →   vibrate([50, 30, 50, 30, 80]);  // nicer celebration pattern
   dom.counterBtn.classList.add('milestone');
   dom.counterBtn.addEventListener('animationend', () => dom.counterBtn.classList.remove('milestone'), { once: true });
   showToast(`✨ Round ${state.rounds} complete! +${state.target}`);
@@ -257,7 +257,7 @@ function onRoundComplete() {
 function undo() {
   if (state.count === 0) return;
   state.count = Math.max(0, state.count - 1);
-  vibrate(15); saveState(); renderCounter();
+  vibrate(15);          →   vibrate([20]); saveState(); renderCounter();
 }
 
 function reset() {
